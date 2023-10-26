@@ -4,7 +4,7 @@ for (let i = 0; i < jumlahForm; i++) {
     document.write(`
         <div class="col-12 col-md-6">
             <label id="panjang${i}" for="data${i}" class="form-label font-weight-light mt-2 mb-0">Essay ke ${i + 1}</label>
-            <textarea id="data${i}" class="form-control shadow"></textarea>
+            <textarea id="data${i}" rows="5" class="form-control shadow"></textarea>
         </div>
     `);
 }
