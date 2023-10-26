@@ -5,34 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mawan's Online Text Editor</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<style>
+    p {text-align: justify}
+</style>
 </head>
 
 <body>
 <div class="container">
   <div id="forms">
-    <div class="row mt-3 mb-3">
+    <div class="row mt-2">
+        <div class="alert alert-secondary text-center">
+            Anda sedang memakai <strong>Mawan's Online Text Editor</strong> versi 1.00.
+        </div>
+    </div>
+     <div class="row mt-2 mb-2">
       <div class="col-12 col-md-6">
-        <p>Anda sedang memakai <strong>Mawan's Online Text Editor</strong> versi 1.00.</p>
         <p>Editor ini cocok dipakai oleh bapak/ibu guru <strong>Calon Guru Penggerak</strong> atau 
         <strong>Calon Pengajar Praktik</strong> dalam mengisi <strong>essay</strong>.</p>
         <p>Dengan memakai aplikasi web ini, bapak/ibu tidak akan kehilangan data akibat 
-            <strong>kehabisan sesi</strong> seperti yang bisa terjadi di SIMPKB.
-            Juga tidak perlu capek akibat harus sering meng-klik tombol "Simpan".</p>
-        <p>Penggunaan: Silakan ketik jawaban essay di sini, setelah itu baru disalin 
+            <strong>kehabisan sesi</strong> seperti yang bisa terjadi bila mengetik di SIMPKB.
+            Juga tidak perlu capek akibat harus sering meng-klik tombol "Simpan" karena semua ketikan
+            otomatis disimpan.</p>
+        <p><strong>Penggunaan:</strong><br>
+        Silakan ketik jawaban essay di sini, setelah itu baru disalin 
         ke SIMPKB.</p>
       </div>
       <div class="col-12 col-md-6">
         <p>Bila bapak/ibu lelah mengetik, boleh istirahat. Bahkan boleh menutup peramban 
          <em>(browser)</em> dan mematikan laptop. Data tidak akan hilang. Wow!</p>
-          <p>Jangan khawatir tentang privacy. Semua yang diketik di sini, disimpan di
+          <p>Jangan khawatir tentang <em>privacy</em>. Semua yang diketik di sini, disimpan di
           <em>local storage</em> (data disimpan di HP, laptop, atau PC milik bapak/ibu sendiri),
         dan tak ada satu huruf pun yang dikirim ke luar atau disimpan di server saya.</p>
           <p>Aplikasi ini persembahan dari <a href="https://www.mawan.id">Mawan Agus Nugroho</a>,
-          Guru Penggerak angkatan 7 Kota Tangerang, Banten.</p>
+          Guru Penggerak angkatan 7.</p>
       </div>
     </div>
-    <hr>
-    <div class="row mt-3 mb-3">
+
+    <div class="row mt-2 mb-5">
       <!-- Buat form dan span dengan ID sebagai array -->
       <!-- Loop untuk membuat sejumlah form dan span -->
       <script>
@@ -40,15 +49,15 @@
         for (let i = 0; i < jumlahForm; i++) {
           document.write(`
             <div class="col-12 col-md-6">
-              <label id="panjang${i}" for="data${i}" class="form-label"></label>
-              <textarea id="data${i}" class="form-control"></textarea>
+              <label id="panjang${i}" for="data${i}" class="form-label font-weight-light mt-2 mb-0">Essay ke ${i}</label>
+              <textarea id="data${i}" class="form-control shadow"></textarea>
             </div>
           `);
         }
       </script>
     </div>
-    <hr>
-      <p class="font-weight-light text-end">&copy; Mawan A. Nugroho</p>
+    <hr class="mt-5 mb-0">
+      <p class="font-weight-light text-end mt-0">&copy; Mawan A. Nugroho</p>
   </div>
 </div>
 
@@ -61,7 +70,8 @@ function updateCharacterCount(id) {
   return () => {
     const text = textarea.value;
     const characterCount = text.length;
-    characterCountSpan.textContent = characterCount;
+    const nomor = id + 1;
+    characterCountSpan.textContent = `Essay ke ${nomor} => Panjang ${characterCount} karakter.`;
   };
 }
 
