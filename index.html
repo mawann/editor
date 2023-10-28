@@ -48,6 +48,17 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
+
+        var darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (darkMode) {
+          $('html').attr('data-bs-theme', 'dark');
+        }
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(event) {
+          var newTheme = event.matches ? 'dark' : 'light';
+          $('html').attr('data-bs-theme', newTheme);
+        });
+
         var textareas = Array(20).fill('');
         var characterCounts = Array(20).fill(0);
     
