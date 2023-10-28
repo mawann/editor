@@ -47,49 +47,49 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
       $(document).ready(function() {
-          var textareas = Array(20).fill('');
-          var characterCounts = Array(20).fill(0);
-
-          function updateCharacterCount(index, newText) {
-              var newCharacterCount = newText.length;
-              characterCounts[index] = newCharacterCount;
-              $('#count' + index).text(`Essay ke ${index + 1} => Jumlah karakter: ${newCharacterCount}`);
-          }
-
-          function handleTextareaChange(index, event) {
-              var newText = $(event.target).val();
-              textareas[index] = newText;
-              updateCharacterCount(index, newText);
-              saveDataToLocalStorage(index);
-          }
-
-          function saveDataToLocalStorage(index) {
-              var dataToSave = {
-                  text: textareas[index],
-                  characterCount: characterCounts[index]
-              };
-              localStorage.setItem(`savedData${index}`, JSON.stringify(dataToSave)); // Ganti kunci dengan 'savedDataX'
-          }
-
-          var $app = $('#app');
-
-          for (var i = 0; i < 20; i++) {
-              var $div = $('<div>').addClass('col-12 col-md-6');
-              var $p = $('<p>').attr('id', 'count' + i).addClass('mt-3 mb-0').text(`Essay ke ${i + 1} => Jumlah karakter: ${characterCounts[i]}`);
-              var $textarea = $('<textarea>').addClass('form-control shadow').attr('rows', 5);
-
-              $app.append($div.append($p, $textarea));
-
-              $textarea.val(textareas[i]);
-              $textarea.on('input', handleTextareaChange.bind(null, i));
-
-              // Tambahkan kode berikut untuk membaca data dari localStorage (jika ada)
-              var savedData = JSON.parse(localStorage.getItem(`savedData${i}`));
-              if (savedData) {
-                  $textarea.val(savedData.text);
-                  updateCharacterCount(i, savedData.text);
-              }
-          }
+        var textareas = Array(20).fill('');
+        var characterCounts = Array(20).fill(0);
+    
+        function updateCharacterCount(index, newText) {
+          var newCharacterCount = newText.length;
+          characterCounts[index] = newCharacterCount;
+          $('#count' + index).text(`Essay ke ${index + 1} => Jumlah karakter: ${newCharacterCount}`);
+        }
+    
+        function handleTextareaChange(index, event) {
+          var newText = $(event.target).val();
+          textareas[index] = newText;
+          updateCharacterCount(index, newText);
+          saveDataToLocalStorage(index);
+        }
+    
+        function saveDataToLocalStorage(index) {
+          var dataToSave = {
+            textareas: textareas,
+            characterCounts: characterCounts
+          };
+          localStorage.setItem('textData', JSON.stringify(dataToSave));
+        }
+    
+        var savedData = JSON.parse(localStorage.getItem('textData'));
+    
+        if (savedData && savedData.textareas) {
+          textareas = savedData.textareas;
+          characterCounts = savedData.characterCounts;
+        }
+    
+        var $app = $('#app');
+    
+        for (var i = 0; i < 20; i++) {
+          var $div = $('<div>').addClass('col-12 col-md-6');
+          var $p = $('<p>').attr('id', 'count' + i).addClass('mt-3 mb-0').text(`Essay ke ${i + 1} => Jumlah karakter: ${characterCounts[i]}`);
+          var $textarea = $('<textarea>').addClass('form-control shadow').attr('rows', 5);
+    
+          $app.append($div.append($p, $textarea));
+    
+          $textarea.val(textareas[i]);
+          $textarea.on('input', handleTextareaChange.bind(null, i));
+        }
       });
     </script>
 
