@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mawan's Online Text Editor</title>
+<link rel="icon" type="image/png" href="icon.png" sizes="96x96">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<style>
+    p {text-align: justify}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <div id="forms">
+    <div class="row mt-2">
+        <div class="alert alert-secondary text-center">
+            Anda&nbsp;sedang&nbsp;memakai <strong>Mawan's&nbsp;Online&nbsp;Text&nbsp;Editor</strong> versi&nbsp;25&nbsp;Okt&nbsp;2023.
+        </div>
+    </div>
+     <div class="row mt-2 mb-2">
+      <div class="col-12 col-md-6">
+        <p>Editor ini cocok dipakai oleh bapak/ibu guru <strong>Calon Guru Penggerak</strong> atau 
+        <strong>Calon Pengajar Praktik</strong> dalam mengisi <strong>essay</strong>.</p>
+        <p>Dengan memakai aplikasi web ini, bapak/ibu tidak akan kehilangan data akibat 
+            <strong>kehabisan sesi</strong> seperti yang bisa terjadi bila mengetik di SIMPKB.
+            Juga tidak perlu capek akibat harus sering meng-klik tombol "Simpan" karena semua ketikan
+            otomatis disimpan.</p>
+        <p><strong>Penggunaan:</strong><br>
+        Silakan ketik jawaban essay di sini, setelah itu baru disalin 
+        ke SIMPKB.</p>
+      </div>
+      <div class="col-12 col-md-6">
+        <p>Bila bapak/ibu lelah mengetik, boleh istirahat. Bahkan boleh menutup peramban 
+         <em>(browser)</em> dan mematikan laptop. Data tidak akan hilang. Wow!</p>
+          <p>Jangan khawatir tentang <em>privacy</em>. Semua yang diketik di sini, disimpan di
+          <em>local storage</em> (data disimpan di HP, laptop, atau PC milik bapak/ibu sendiri),
+        dan tak ada satu huruf pun yang dikirim ke luar atau disimpan di server saya.</p>
+          <p>Aplikasi ini persembahan dari <a href="https://www.mawan.id">Mawan Agus Nugroho</a>,
+          Guru Penggerak angkatan 7 Kota Tangerang, Banten.</p>
+      </div>
+    </div>
+
+    <div id="app" class="row mt-2 mb-5"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function() {
+          var textareas = Array(20).fill('');
+          var characterCounts = Array(20).fill(0);
+
+          function updateCharacterCount(index, newText) {
+              var newCharacterCount = newText.length;
+              characterCounts[index] = newCharacterCount;
+              $('#count' + index).text(`Essay ke ${index + 1} => Jumlah karakter: ${newCharacterCount}`);
+          }
+
+          function handleTextareaChange(index, event) {
+              var newText = $(event.target).val();
+              textareas[index] = newText;
+              updateCharacterCount(index, newText);
+              saveDataToLocalStorage(index);
+          }
+
+          function saveDataToLocalStorage(index) {
+              var dataToSave = {
+                  text: textareas[index],
+                  characterCount: characterCounts[index]
+              };
+              localStorage.setItem(`savedData${index}`, JSON.stringify(dataToSave)); // Ganti kunci dengan 'savedDataX'
+          }
+
+          var $app = $('#app');
+
+          for (var i = 0; i < 20; i++) {
+              var $div = $('<div>').addClass('col-12 col-md-6');
+              var $p = $('<p>').attr('id', 'count' + i).addClass('mt-3 mb-0').text(`Essay ke ${i + 1} => Jumlah karakter: ${characterCounts[i]}`);
+              var $textarea = $('<textarea>').addClass('form-control shadow').attr('rows', 5);
+
+              $app.append($div.append($p, $textarea));
+
+              $textarea.val(textareas[i]);
+              $textarea.on('input', handleTextareaChange.bind(null, i));
+
+              // Tambahkan kode berikut untuk membaca data dari localStorage (jika ada)
+              var savedData = JSON.parse(localStorage.getItem(`savedData${i}`));
+              if (savedData) {
+                  $textarea.val(savedData.text);
+                  updateCharacterCount(i, savedData.text);
+              }
+          }
+      });
+    </script>
+
+    <hr class="mt-5 mb-0">
+      <p class="font-weight-light text-end mt-0">&copy; Mawan A. Nugroho</p>
+  </div>
+</div>
+</body>
+</html>
