@@ -1,3 +1,12 @@
+var darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+if (darkMode) {
+  document.documentElement.setAttribute('data-bs-theme', 'dark');
+}
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(event) {
+  var newTheme = event.matches ? 'dark' : 'light';
+  document.documentElement.setAttribute('data-bs-theme', newTheme);
+});
+
 const jumlahForm = 20;
 
 for (let i = 0; i < jumlahForm; i++) {
